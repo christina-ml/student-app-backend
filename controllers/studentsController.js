@@ -33,6 +33,30 @@ controller.get('/', (request, response)=>{
 })
 
 // write a route to get a student by their full name
+// controller.get('/:id/:firstname/:lastname', (request, response)=>{
+//     let studentId = request.params.id;
+//     let query = request.query;
+//     let firstname = request.query.firstname;
+//     let lastname = request.query.lastname;p
+//     try {
+
+//         const singleStudent = studentData.students.find(student => {
+
+//             return student.id === studentId;
+//         });
+
+//         console.log(singleStudent);
+//         if (singleStudent){
+//             response.json(singleStudent);
+//         } else {
+//             response.send('Student name not found');
+//         }
+
+
+//     } catch (error){
+//         response.status(500).send('Error: route for get student by full name error');
+//     }
+// })
 
 // implement min and max ids for get students
 
