@@ -17,6 +17,9 @@ npm install pg-promise
 ## Postico
 [Postico](https://eggerapps.at/postico/)
 
+to move database to production. (Alternative - use heroku)
+Postico - you can only have 5 apps at a time
+
 # heroku
 to restart application
 ```
