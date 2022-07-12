@@ -16,3 +16,9 @@ npm install pg-promise
  
 ## Postico
 [Postico](https://eggerapps.at/postico/)
+
+# heroku
+to restart application
+```
+heroku restart
+```
