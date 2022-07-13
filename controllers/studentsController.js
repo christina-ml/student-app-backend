@@ -56,4 +56,21 @@ controller.get('/:id', async (request, response) => {
     }
 })
 
+// route for finding the grades of a specific student
+controller.get('/:id/grades', async (req, res) => {
+    try {
+        const studentId = req.params.id;
+
+        const grades = await db.any('SELECT * FROM grades WHERE student_id = $1', [studentId]);
+        
+        // sort the grades (oldest to newest)
+        grades.sort((a, b) => a.date - b.date);
+
+        
+        res.json(grades);
+    } catch (err){
+        res.status(500).send(err)
+    }
+})
+
 module.exports = controller;
