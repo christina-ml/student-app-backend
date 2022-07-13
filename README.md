@@ -21,6 +21,11 @@ to move database to production. (Alternative - use heroku)
 Postico - you can only have 5 apps at a time
 
 # heroku
+get database into production:
+```
+ git push heroku
+```
+
 to restart application
 ```
 heroku restart
