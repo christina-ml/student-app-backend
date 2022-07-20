@@ -49,3 +49,16 @@ VALUES ('87', 1, '2022-07-13'),
 ('100', 1, '2022-07-07'),
 ('78', 1, '2022-07-06');
 ```
+
+SELECT * FROM grades ORDER BY (grade) DESC;
+
+SELECT * FROM students WHERE id = 1;
+SELECT students.firstname, students.lastname FROM students WHERE id = 1;
+
+```
+SELECT students.firstname, students.lastname, grades.grade FROM students
+JOIN grades
+ON grades.student_id = students.id
+WHERE students.id = 1
+ORDER BY grades.grade DESC;
+```
