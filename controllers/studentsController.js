@@ -3,7 +3,9 @@ const controller = express.Router();
 
 const studentData = require('../studentData.json');
 
-const db = require('../db/index');
+// const db = require('../db/index'); // <== Jordan
+const db = require('../db/dbConfig'); // <== Jose
+const { response } = require('express');
 
 // get all students
 controller.get('/', async (request, response) => {
@@ -72,5 +74,24 @@ controller.get('/:id/grades', async (req, res) => {
         res.status(500).send(err)
     }
 })
+
+// Jose - UPDATE ROUTE
+controller.put('/:id', async (req, res) => {
+    console.log('Update route is up and running')
+
+    try {
+        // the id helps db to know which students to update and body is the new info to be used
+        const studentId = req.params.id;
+        const newInfo = req.body;
+    
+        // const updatedStudent = await db.one('SELECT * FROM students WHERE id = $1', [studentId]); // <= Just testing if it works
+        const updatedStudent = await db.one('UPDATE students SET firstName=$1, lastName=$2, company=$3, skill=$4, pic=$5, city=$6, email=$7 WHERE id=$8 RETURNING *', [studentId, newInfo]);
+
+        res.status(200).json({success: true, payload: updatedStudent});
+    } catch (err) {
+        res.status(500).send(err);
+    }
+})
+
 
 module.exports = controller;
