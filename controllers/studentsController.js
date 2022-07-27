@@ -74,21 +74,18 @@ controller.get('/:id/grades', async (req, res) => {
     }
 });
 
-// UPDATE
-controller.put('/:id', async (req, res) => {
+controller.put('/:id', async(req, res) => {
     try {
+
         const studentId = req.params.id;
         const {firstname, lastname, company, city, skill, pic} = req.body;
-        
-        // console.log(req.body)
-        // console.log(firstname)
 
-        const updatedUser = await db.one('UPDATE students SET firstname=$1, lastname=$2, company=$3, city=$4, skill=$5, pic=$6 WHERE id=$7 RETURNING *', [firstname, lastname, company, city, skill, pic, studentId]
-        );
+        const updatedUser = await db.one('UPDATE students SET firstname=$1, lastname=$2, company=$3, city=$4, skill=$5, pic=$6 WHERE id=$7 RETURNING *', [firstname, lastname, company, city, skill, pic, studentId]);
 
-        res.json(updatedUser)
+        res.json(updatedUser);
 
-    } catch (err){
+    } catch(err){
+        console.log(err);
         res.status(500).send(err);
     }
 })
@@ -107,23 +104,5 @@ controller.delete('/:id', async (req, res) => {
         res.status(500).send(err);
     }
 })
-
-// Jose - UPDATE ROUTE
-// controller.put('/:id', async (req, res) => {
-//     console.log('Update route is up and running')
-
-//     try {
-//         // the id helps db to know which students to update and body is the new info to be used
-//         const studentId = req.params.id;
-//         const newInfo = req.body;
-    
-//         // const updatedStudent = await db.one('SELECT * FROM students WHERE id = $1', [studentId]); // <= Just testing if it works
-//         const updatedStudent = await db.one('UPDATE students SET firstName=$1, lastName=$2, company=$3, skill=$4, pic=$5, city=$6, email=$7 WHERE id=$8 RETURNING *', [studentId, newInfo]);
-
-//         res.status(200).json({success: true, payload: updatedStudent});
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// })
 
 module.exports = controller;
