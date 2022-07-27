@@ -6,8 +6,8 @@ const {repeatNTimesWithSpace, capitalizeFirstLetter} = require('../utils/stringU
 controller.get('/capitalizeName/:name/', (request, response) => {
     try {
         // get name
-        const name = request.params.name;
-        // console.log(name)
+        const name = request.params.name
+        console.log(name)
         // get result of repeatNTimesWithSpace
         const capitalizedName = capitalizeFirstLetter(name);
 
@@ -15,7 +15,7 @@ controller.get('/capitalizeName/:name/', (request, response) => {
         response.send(capitalizedName);
 
     } catch (err){
-        response.send("There was an error.");
+        response.send("There was an error.")
     }
 })
 
@@ -23,10 +23,10 @@ controller.get('/:name/:times', (request, response) => {
     try {
 
         // get name
-        const name = request.params.name;
+        const name = request.params.name
 
         // get times
-        const times = request.params.times;
+        const times = request.params.times
 
         // get result of repeatNTimesWithSpace
         const repeatedNames = repeatNTimesWithSpace(name, times);
@@ -35,7 +35,7 @@ controller.get('/:name/:times', (request, response) => {
         response.send(repeatedNames);
 
     } catch (err){
-        response.send("There was an error.");
+        response.send("There was an error.")
     }
 })
 
