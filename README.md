@@ -1,3 +1,6 @@
+<!-- remember to do both: `git push`, and `git push heroku` -->
+
+
 # Dependencies
 
 ```
