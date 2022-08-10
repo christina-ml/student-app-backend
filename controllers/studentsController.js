@@ -1,6 +1,8 @@
 const express = require('express');
 const controller = express.Router();
 
+const {isValidEmail} = require('../utils/emailValidation');
+
 const studentData = require('../studentData.json');
 
 const db = require('../db/index');
@@ -33,7 +35,6 @@ controller.get('/', async (request, response) => {
 // write a route that accepts a student id as part of the path
 // returning an object (JSON), representing the student with that id
 
-// get students by their specific id
 controller.get('/:id', async (request, response) => {
     try {
         const studentId = request.params.id;
@@ -56,8 +57,6 @@ controller.get('/:id', async (request, response) => {
     }
 })
 
-// route for finding the grades of a specific student
-// sort the grades (oldest to newest)
 controller.get('/:id/grades', async (req, res) => {
 
     try {  
@@ -82,15 +81,28 @@ controller.post('/', async(req, res) => {
         const {
             firstname, 
             lastname, 
-            email,
             company, 
             city, 
             skill, 
-            pic } = req.body;
+            pic, 
+            email} = req.body;
+
+        // is an provided? must be provided
+
+        if(!email){
+            res.send("Email is required.");
+            return;
+        }
+
+        // is the email valid? must be valid
+        if(!isValidEmail(email)){
+            res.send("Please provide a valid email.")
+            return;
+        }
 
         // save student to db
-        const student = await db.one('INSERT INTO students (firstname, lastname, email, company, city, skill, pic) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', 
-            [firstname, lastname, email, company, city, skill, pic]
+        const student = await db.one('INSERT INTO students (firstname, lastname, company, email, city, skill, pic) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', 
+            [firstname, lastname, company, email, city, skill, pic]
         );
 
         // send a json response returning the new student
@@ -107,12 +119,22 @@ controller.put('/:id', async(req, res) => {
         const studentId = req.params.id;
         const {firstname, lastname, email, company, city, skill, pic} = req.body;
 
+        if(!email){
+            res.send("Email is required.");
+            return;
+        }
+
+        // is the email valid? must be valid
+        if(!isValidEmail(email)){
+            res.send("Please provide a valid email.")
+            return;
+        }
+
         const updatedUser = await db.one('UPDATE students SET firstname=$1, lastname=$2, email=$3, company=$4, city=$5, skill=$6, pic=$7 WHERE id=$8 RETURNING *', [firstname, lastname, email, company, city, skill, pic, studentId]);
 
         res.json(updatedUser);
 
     } catch(err){
-        console.log(err);
         res.status(500).send(err);
     }
 })
